@@ -1,1 +1,633 @@
-#UrbanZone247
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urban Zone - Tu Estilo Urbano</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Fuentes y Reseteo Básico */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f0f2f5; /* Fondo suave */
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Estilo Nude Project para el lettering */
+        .nude-project-text {
+            font-family: 'Montserrat', sans-serif; /* Puedes ajustar si encuentras una fuente más parecida */
+            font-weight: 300; /* Fino */
+            letter-spacing: 1.5px; /* Elegante */
+            text-transform: uppercase;
+        }
+
+        /* Colores Vibrantes */
+        :root {
+            --primary-color: #FF6B6B; /* Rojo Coral Vibrante */
+            --secondary-color: #4ECDC4; /* Turquesa Brillante */
+            --accent-color: #FFC900; /* Amarillo Sol */
+            --dark-text: #2c3e50;
+            --light-text: #ecf0f1;
+            --button-hover: #e04a4a;
+        }
+
+        /* Header */
+        .header {
+            background-color: #fff;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--dark-text);
+            text-transform: uppercase;
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .nav-menu ul li {
+            margin-left: 40px;
+        }
+
+        .nav-menu ul li a {
+            font-size: 1.1em;
+            font-weight: 500;
+            color: var(--dark-text);
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            display: block;
+            margin-top: 5px;
+            right: 0;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu ul li a:hover::after {
+            width: 100%;
+            left: 0;
+            background: var(--primary-color);
+        }
+
+        .cart-icon {
+            font-size: 1.8em;
+            color: var(--dark-text);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .cart-count {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            padding: 2px 7px;
+            font-size: 0.7em;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            display: none; /* Se mostrará con JavaScript cuando haya productos */
+        }
+
+        /* Hero Section (Página de Inicio - Promociones) */
+        .hero-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 40px 5%;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .promo-card {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .promo-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .promo-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.8);
+            transition: filter 0.3s ease;
+        }
+
+        .promo-card:hover img {
+            filter: brightness(1);
+        }
+
+        .promo-content {
+            padding: 25px;
+            color: var(--light-text);
+        }
+
+        .promo-content h3 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .promo-content p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .promo-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--dark-text);
+            padding: 12px 25px;
+            border-radius: 30px;
+            margin-top: 20px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+
+        .promo-button:hover {
+            background-color: #FFD93B;
+            transform: translateY(-3px);
+        }
+
+        /* Sección de la Tienda */
+        .shop-section {
+            padding: 60px 5%;
+            text-align: center;
+        }
+
+        .shop-section h2 {
+            font-size: 3em;
+            color: var(--dark-text);
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .shop-section h2::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -10px;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: left;
+            padding-bottom: 20px;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-info {
+            padding: 20px 25px;
+        }
+
+        .product-info h3 {
+            font-size: 1.6em;
+            margin-bottom: 10px;
+            color: var(--dark-text);
+            font-weight: 600;
+        }
+
+        .product-info p {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-top: 10px;
+        }
+
+        .product-button {
+            display: block;
+            width: calc(100% - 50px); /* Ajuste para el padding */
+            margin: 0 25px;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 12px 0;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            text-align: center;
+        }
+
+        .product-button:hover {
+            background-color: #3BBDB4;
+            transform: translateY(-3px);
+        }
+
+        /* Página de Detalle de Producto (Simulación) */
+        .product-detail-page {
+            padding: 60px 5%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: center;
+            align-items: flex-start;
+            background-color: #fff;
+            border-radius: 15px;
+            margin: 40px 5%;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        .product-detail-image {
+            flex: 1 1 500px; /* Hace que la imagen ocupe más espacio en pantallas grandes */
+            max-width: 600px;
+            min-width: 300px;
+        }
+
+        .product-detail-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .product-detail-info {
+            flex: 1 1 400px;
+            padding: 20px;
+        }
+
+        .product-detail-info h2 {
+            font-size: 3em;
+            color: var(--dark-text);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .product-detail-info .price {
+            font-size: 2.2em;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+
+        .product-detail-info .description {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .options-group {
+            margin-bottom: 25px;
+        }
+
+        .options-group label {
+            display: block;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 10px;
+        }
+
+        .quantity-selector, .size-selector, .color-selector {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .quantity-selector input[type="number"] {
+            width: 80px;
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1em;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .quantity-selector input[type="number"]:focus {
+            border-color: var(--secondary-color);
+        }
+
+        .size-selector button, .color-selector button {
+            background-color: #f5f5f5;
+            border: 2px solid #ddd;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .size-selector button.selected, .color-selector button.selected {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .size-selector button:hover, .color-selector button:hover {
+            border-color: var(--primary-color);
+            background-color: #ffeaea;
+        }
+
+        .color-selector button.selected {
+            border-color: var(--primary-color); /* Para que el borde sea visible si el color de fondo es similar */
+        }
+
+        .add-to-cart-button {
+            display: block;
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.3em;
+            border: none;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .add-to-cart-button:hover {
+            background-color: var(--button-hover);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--dark-text);
+            color: var(--light-text);
+            padding: 40px 5%;
+            text-align: center;
+            font-size: 0.9em;
+            margin-top: 60px;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+
+        .footer nav a {
+            color: var(--light-text);
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+
+        .footer nav a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Media Queries para Responsividad */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 15px 3%;
+            }
+
+            .nav-menu ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-menu ul li {
+                margin: 0 15px 10px;
+            }
+
+            .logo {
+                font-size: 1.8em;
+            }
+
+            .hero-section {
+                padding: 30px 3%;
+            }
+
+            .shop-section {
+                padding: 40px 3%;
+            }
+
+            .shop-section h2 {
+                font-size: 2.2em;
+                margin-bottom: 30px;
+            }
+
+            .product-detail-page {
+                flex-direction: column;
+                margin: 20px 3%;
+                padding: 30px 3%;
+            }
+
+            .product-detail-image, .product-detail-info {
+                flex: 1 1 100%;
+            }
+
+            .product-detail-info h2 {
+                font-size: 2.2em;
+            }
+
+            .product-detail-info .price {
+                font-size: 1.8em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-menu ul li {
+                margin: 0 10px 10px;
+            }
+            .promo-content h3 {
+                font-size: 1.4em;
+            }
+            .promo-content p {
+                font-size: 0.9em;
+            }
+            .promo-button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+            .product-info h3 {
+                font-size: 1.3em;
+            }
+            .product-info p {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo nude-project-text">Urban Zone</div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="#home" class="nude-project-text">Inicio</a></li>
+                <li><a href="#shop" class="nude-project-text">Tienda</a></li>
+                <li><a href="#about" class="nude-project-text">Nosotros</a></li>
+                <li><a href="#contact" class="nude-project-text">Contacto</a></li>
+            </ul>
+        </nav>
+        <div class="cart-icon">
+            🛒 <span class="cart-count">0</span>
+        </div>
+    </header>
+
+    <section id="home" class="hero-section">
+        <div class="promo-card">
+            <img src="https://via.placeholder.com/600x400/FF6B6B/FFFFFF?text=Nueva+Colecci%C3%B3n" alt="Promoción 1">
+            <div class="promo-content">
+                <h3 class="nude-project-text">Nueva Colección Verano '25</h3>
+                <p>Descubre las últimas tendencias y los diseños más frescos para esta temporada.</p>
+                <a href="#shop" class="promo-button">Explora Ahora</a>
+            </div>
+        </div>
+        <div class="promo-card">
+            <img src="https://via.placeholder.com/600x400/4ECDC4/FFFFFF?text=Ofertas+Especiales" alt="Promoción 2">
+            <div class="promo-content">
+                <h3 class="nude-project-text">Ofertas Flash Semanales</h3>
+                <p>No te pierdas descuentos increíbles en una selección de nuestras camisetas más populares.</p>
+                <a href="#shop" class="promo-button">Ver Ofertas</a>
+            </div>
+        </div>
+        <div class="promo-card">
+            <img src="https://via.placeholder.com/600x400/FFC900/FFFFFF?text=Env%C3%ADo+Gratis" alt="Promoción 3">
+            <div class="promo-content">
+                <h3 class="nude-project-text">¡Envío Gratis en Tu Primer Pedido!</h3>
+                <p>Haz tu primera compra y nosotros nos encargamos del envío. ¡Aprovecha ya!</p>
+                <a href="#shop" class="promo-button">Comprar</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="shop" class="shop-section">
+        <h2 class="nude-project-text">Nuestras Camisetas</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <a href="#product-detail-1">
+                    <img src="https://via.placeholder.com/400x400/FF6B6B/FFFFFF?text=Camiseta+Urbana" alt="Camiseta Urbana">
+                </a>
+                <div class="product-info">
+                    <h3 class="nude-project-text">Camiseta Urbana Esencial</h3>
+                    <p>14.99 €</p>
+                    <a href="#product-detail-1" class="product-button">Ver Producto</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <a href="#product-detail-2">
+                    <img src="https://via.placeholder.com/400x400/4ECDC4/FFFFFF?text=Camiseta+Street" alt="Camiseta Street">
+                </a>
+                <div class="product-info">
+                    <h3 class="nude-project-text">Camiseta Street Vibe</h3>
+                    <p>12.99 €</p>
+                    <a href="#product-detail-2" class="product-button">Ver Producto</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <a href="#product-detail-3">
+                    <img src="https://via.placeholder.com/400x400/FFC900/FFFFFF?text=Camiseta+Minimal" alt="Camiseta Minimalista">
+                </a>
+                <div class="product-info">
+                    <h3 class="nude-project-text">Camiseta Minimal Chic</h3>
+                    <p>13.99 €</p>
+                    <a href="#product-detail-3" class="product-button">Ver Producto</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <a href="#product-detail-4">
+                    <img src="https://via.placeholder.com/400x400/8A2BE2/FFFFFF?text=Camiseta+Estilo" alt="Camiseta Estilo Urbano">
+                </a>
+                <div class="product-info">
+                    <h3 class="nude-project-text">Camiseta Estilo Bold</h3>
+                    <p>15.99 €</p>
+                    <a href="#product-detail-4" class="product-button">Ver Producto</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <a href="#product-detail-5">
+                    <img src="https://via.placeholder.com/400x400/FF9F1C/FFFFFF?text=Camiseta+Grafico" alt="Camiseta con Gráfico">
+                </a>
+                <div class="product-info">
+                    <h3 class="nude-project-text">Camiseta Gráfico Abstracto</h3>
+                    <p>14.49 €</p>
+                    <a href="#product-detail-5" class="product-button">Ver Producto</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <a href="#product-detail-6">
+                    <img src="https://via.placeholder.com/400x400/00BFFF/FFFFFF?text=Camiseta+Premium" alt="Camiseta Premium">
+                </a>
+                <div class="product-info">
+                    <h3 class="nude-project-text">Camiseta Premium Suave</h3>
+                    <p>15.50 €</p>
+                    <a href="#product-detail-6" class="product-button">Ver Producto</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="product-detail-1" class="product-detail-page" style="display: none;"> <div class="product-detail-image">
+            <img src="https://via.placeholder.com/800x800/FF6B6B/FFFFFF?text=Camiseta+Urbana+Detalle" alt="Camiseta Urbana Detalle">
+        </div>
+        <div class="product-detail-info">
+            <h2 class="nude-project-text">Camiseta Urbana Esencial</h2>
+            <p class="price">14.99 €</p>
+            <p class="description">
+                Esta camiseta es el básico perfecto para tu armario urbano. Fabricada con 
